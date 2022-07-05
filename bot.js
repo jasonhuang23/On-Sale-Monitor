@@ -3,7 +3,7 @@ require("dotenv").config()
 //const bot = new Discord.Client();
 const lib = require("./index")
 
-const token = 'OTkzMzQzOTc4NDExOTIxNDk5.GIErbH.8vZGqArn20zCLxGL5kmLKZafcLnABF61gFp0W0'
+
 
 
 const client = new Discord.Client({
