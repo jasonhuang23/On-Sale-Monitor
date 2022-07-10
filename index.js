@@ -42,10 +42,12 @@ async function loadPages() {
     const moneyVal = await page.evaluate(() =>
         Array.from(document.querySelectorAll('.sr-only'), element => element.textContent));
 
-        //console.log(testText[0]);
-    await productSalePrice(moneyVal);
-    await productNames(products);
 
+        //console.log(testText[0]);
+    //await productSalePrice(moneyVal);
+    //await productNames(products);
+
+    //console.log(testEval.text());
     
 
     // Gets all html from the site.
@@ -54,6 +56,7 @@ async function loadPages() {
     const $ = cheerio.load(pageData.html);
 
     const element = $(".product-count");
+  
     //const productTitle = $(".product-card-title");
     //const lowestPrice = $(".lowest");
 

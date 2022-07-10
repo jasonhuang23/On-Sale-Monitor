@@ -18,6 +18,13 @@ client.on('ready', () =>{
     console.log("This bot is online")
 })
 
+client.on('messageCreate', (message) => {
+    if (message.content == "Hi") {
+        message.reply("howdy")
+    }
+
+})
+
 const result = lib.loadPages();
 
 
