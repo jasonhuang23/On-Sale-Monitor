@@ -56,11 +56,44 @@ async function loadPages() {
     const $ = cheerio.load(pageData.html);
 
     const element = $(".product-count");
+    const productColumns = $(".column");
+
+    console.log("length: " + productColumns.length);
+    
+    let priceArray = [];
+
+     for  (let i  = 0; i < productColumns.length; i++) {
+         let allReducedPrices = $(productColumns[i]).find(".price-row")[0],
+         // Algorithm if you want to remove the second occurence of a character.
+         // split function on string with substring you want to remove as seperator.
+         // Followed by the limit "2", this will split only two elements into an array.
+         // Join function on array as the first occurence will not be inserted back. 
+         reducedPricesText = ($(allReducedPrices).text()).split("$", 2).join("$");
+
+        // finalAllReducedPrices will now store all the reduced prices for the products.
+         finalAllReducedPrices = reducedPricesText.split("Reduced: ").join("");
+
+         //push prices into priceArray array.
+
+         priceArray.push(finalAllReducedPrices);
+         
+
+        //  splitReducedPricestext = reducedPricesText.split(" ");
+         
+         
+         console.log("Final Reduced Price: " + finalAllReducedPrices);
+         //console.log("Only Price: " + onlyPrice);
+     }
+
+     console.log(priceArray.length);
+
+ 
   
     //const productTitle = $(".product-card-title");
     //const lowestPrice = $(".lowest");
 
     console.log(element.text());
+
  
     //console.log(productTitle.text());
 
