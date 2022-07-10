@@ -23,8 +23,8 @@ async function loadPages() {
         }
     });
 
-    await page.goto("https://www.fanatics.com/mlb/hats-fitted-sale-items/o-3409+d-19772242-75445340+os-4+z-9-3556458608");
-    //https://www.fanatics.com/mlb/hats-fitted-sale-items/o-3409+d-19772242-75445340+os-4+z-9-3556458608
+    await page.goto(process.env.SITE);
+    
     //Screenshots the page
     //await page.screenshot({ path: "image.png"});
 
