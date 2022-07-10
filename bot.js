@@ -28,6 +28,7 @@ client.on('messageCreate', (message) => {
 const result = lib.loadPages();
 
 
+
 client.login(process.env.TOKEN)
 
 
