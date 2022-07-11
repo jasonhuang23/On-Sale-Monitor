@@ -6,6 +6,7 @@ let currentVal = 0;
 
 
 async function loadPages() {
+    try {
     const browser = await puppeteer.launch();
 
     const page = await browser.newPage();
@@ -81,11 +82,11 @@ async function loadPages() {
         //  splitReducedPricestext = reducedPricesText.split(" ");
          
          
-         console.log("Final Reduced Price: " + finalAllReducedPrices);
+         //console.log("Final Reduced Price: " + finalAllReducedPrices);
          //console.log("Only Price: " + onlyPrice);
      }
 
-     console.log(priceArray.length);
+     console.log("Array Length: " + priceArray.length);
 
  
   
@@ -102,6 +103,17 @@ async function loadPages() {
     //console.log(currentVal);
 
     await browser.close();
+
+    console.log("Current Value: " + currentVal);
+
+    return currentVal;
+
+    }
+
+    catch(error) {
+        return "Products not found";
+    }
+
 
 
 

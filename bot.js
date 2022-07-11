@@ -6,6 +6,8 @@ const lib = require("./index")
 
 
 
+
+
 const client = new Discord.Client({
     intents: [
         "GUILDS",
@@ -19,13 +21,17 @@ client.on('ready', () =>{
 })
 
 client.on('messageCreate', (message) => {
-    if (message.content == "Hi") {
-        message.reply("howdy")
+    if (message.content == "!getCount") {
+        let result = lib.loadPages();
+        result.then(function(result){
+            message.reply(result);
+        })
+        
+        
     }
 
 })
 
-const result = lib.loadPages();
 
 
 
