@@ -39,16 +39,6 @@ async function loadPages() {
     //Array.from takes 2 parameters (object to convert to an array, map function call to element in array).
     const products = await page.evaluate(() =>
         Array.from(document.querySelectorAll('.product-card-title'), element => element.textContent));
-
-    const moneyVal = await page.evaluate(() =>
-        Array.from(document.querySelectorAll('.sr-only'), element => element.textContent));
-
-
-        //console.log(testText[0]);
-    //await productSalePrice(moneyVal);
-    //await productNames(products);
-
-    //console.log(testEval.text());
     
 
     // Gets all html from the site.
@@ -78,20 +68,10 @@ async function loadPages() {
 
          priceArray.push(finalAllReducedPrices);
          
-
-        //  splitReducedPricestext = reducedPricesText.split(" ");
-         
-         
-         //console.log("Final Reduced Price: " + finalAllReducedPrices);
-         //console.log("Only Price: " + onlyPrice);
      }
 
      console.log("Array Length: " + priceArray.length);
 
- 
-  
-    //const productTitle = $(".product-card-title");
-    //const lowestPrice = $(".lowest");
 
     console.log(element.text());
 
@@ -114,26 +94,13 @@ async function loadPages() {
         return "Products not found";
     }
 
-
-
-
 }
 
 async function productNames(productArray) {
     for(var index in productArray) {
         console.log(productArray[index]);
     }
-}
-
-async function productSalePrice(priceArray) {
-    for(var index in priceArray) {
-        if (index % 2 == 0) {
-            // finalPriceArray.push(priceArray[index]);
-            console.log(priceArray[index]);
-        }
-        // console.log(finalPriceArray[index]);
-    }
-}
+}ß
 module.exports = {loadPages};
 //loadPages();
 
