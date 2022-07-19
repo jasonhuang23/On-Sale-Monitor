@@ -100,8 +100,13 @@ async function productNames(productArray) {
     for(var index in productArray) {
         console.log(productArray[index]);
     }
-}ß
+}
 module.exports = {loadPages};
+// Two variables to be used in index.js
+// Set as setInterval() funcation call.
+module.exports.timedCheck = undefined;
+// Tracks number of iterations to run code until stopping.
+module.exports.val = 0;
 //loadPages();
 
 
