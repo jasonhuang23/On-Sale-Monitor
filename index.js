@@ -3,8 +3,6 @@ const cheerio = require("cheerio");
 
 
 let currentVal = 0;
-
-
 async function loadPages() {
     try {
     const browser = await puppeteer.launch();

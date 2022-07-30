@@ -36,7 +36,7 @@ client.on('ready', () =>{
 })
 
 client.on('messageCreate', (message) => {
-    if (message.content == "!count") {
+    if (message.content == ".c") {
 		// If lib.timedCheck is 'undefined'.
 		if(!lib.timedCheck) {
 			lib.timedCheck = setInterval(() => {
@@ -47,15 +47,20 @@ client.on('messageCreate', (message) => {
 					// returnVal will have number of items on page.
 					exampleEmbed.setTitle(returnVal);
 					message.reply({embeds: [exampleEmbed]});
+					message.reply("Iteration #: " + lib.val);
 					console.log("Running... " + lib.val++);
 					valcheck();
 				})
-			}, 300000);
+			}, 60000);
 		}
-
-        
-        
+//1800000 - 30 minute intervals        
     }
+	// stop the bot from running.
+	if (message.content == ".s") {
+		clearInterval(lib.timedCheck);
+		lib.timedCheck = undefined;
+		message.reply("Stopping monitor...");
+	}
 
 	//valcheck function used to reset timedcheck variable once number of iterations are met.
 	let valcheck = () => {
@@ -64,6 +69,7 @@ client.on('messageCreate', (message) => {
 			clearInterval(lib.timedCheck);
 			// Set timedCheck back to undefined so we can run setInterval again.
 			lib.timedCheck = undefined;
+			lib.val = 0;
 			return message.channel.send('command finished');
 		}
 	}
