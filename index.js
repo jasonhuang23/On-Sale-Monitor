@@ -4,13 +4,11 @@ const cheerio = require("cheerio");
 
 let currentVal = 0;
 async function loadPages() {
-    try {
     const browser = await puppeteer.launch();
-
+    try {
     const page = await browser.newPage();
     // Set timeout limit to 0.
     await page.setDefaultNavigationTimeout(0);
-
     //Request request interception.
     await page.setRequestInterception(true);
 
@@ -32,27 +30,22 @@ async function loadPages() {
             html: document.documentElement.innerHTML
         }
     });
-
-
     //Array.from takes 2 parameters (object to convert to an array, map function call to element in array).
     const products = await page.evaluate(() =>
         Array.from(document.querySelectorAll('.product-card-title'), element => element.textContent));
-    
 
     // Gets all html from the site.
    // console.log(pageData);
 
     const $ = cheerio.load(pageData.html);
-
     const element = $(".product-count");
     const productColumns = $(".column");
-
     console.log("length: " + productColumns.length);
-    
     let priceArray = [];
-
-     for  (let i  = 0; i < productColumns.length; i++) {
-         let allReducedPrices = $(productColumns[i]).find(".price-row")[0],
+    for  (let i  = 0; i < productColumns.length; i++) {
+         let allReducedPrices = $(productColumns[i]).find(".price-row")[0];
+         let imageLink = $(productColumns[i]).find(".product-image-container")[0];
+        //  console.log(imageLink.text());
          // Algorithm if you want to remove the second occurence of a character.
          // split function on string with substring you want to remove as seperator.
          // Followed by the limit "2", this will split only two elements into an array.
@@ -67,21 +60,28 @@ async function loadPages() {
          priceArray.push(finalAllReducedPrices);
          
      }
-
      console.log("Array Length: " + priceArray.length);
+
+let testProductArray = [];
+
+     for (let x in products) {
+        let theName = products[x];
+        let thePrice = priceArray[x];
+        const productObj = {
+            name: theName,
+            price: thePrice
+        }
+        testProductArray.push(productObj);
+     }
+
+     console.log(testProductArray);
+
 
 
     console.log(element.text());
-
- 
     //console.log(productTitle.text());
-
     currentVal = element.text();
-
     //console.log(currentVal);
-
-    await browser.close();
-
     console.log("Current Value: " + currentVal);
 
     return currentVal;
@@ -90,6 +90,12 @@ async function loadPages() {
 
     catch(error) {
         return "Products not found";
+    }
+
+    finally {
+        await browser.close();
+        console.log("Closed puppeteer browser");
+
     }
 
 }

@@ -77,6 +77,7 @@ client.on('messageCreate', (message) => {
 })
 
 
+let test = lib.loadPages();
 
 
 client.login(process.env.TOKEN)
