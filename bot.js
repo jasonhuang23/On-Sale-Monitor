@@ -10,7 +10,7 @@ const exampleEmbed = new MessageEmbed()
 	//.setURL('https://discord.js.org/')
 	//.setAuthor({ name: 'Some name', iconURL: 'https://i.imgur.com/AfFp7pu.png', url: 'https://discord.js.org' })
 	//.setDescription('Some description here')
-	//.setThumbnail('https://i.imgur.com/AfFp7pu.png')
+	// .setThumbnail('')
 	.addFields(
 		{ name: 'Fanatics', value: '[Link](https://www.fanatics.com/mlb/hats-fitted-sale-items/o-3409+d-19772242-75445340+os-4+z-9-3556458608)', inline: true },
 		{ name: 'Fansedge', value: '[Link](https://www.fansedge.com/en/mlb-hats-fitted-sale-items/o-4510+d-3472148327-56835899+os-4+z-9-1676315066)', inline: true },
@@ -77,7 +77,7 @@ client.on('messageCreate', (message) => {
 })
 
 
-let test = lib.loadPages();
+//let test = lib.loadPages();
 
 
 client.login(process.env.TOKEN)
