@@ -38,7 +38,7 @@ async function loadPages() {
    // console.log(pageData);
 
     const $ = cheerio.load(pageData.html);
-    const element = $(".product-count");
+    const totalProducts = $(".product-count");
     const productColumns = $(".column");
     console.log("length: " + productColumns.length);
     let priceArray = [];
@@ -85,10 +85,9 @@ let testProductArray = [];
      console.log(testProductArray);
 
 
-
-    console.log(element.text());
+    console.log(totalProducts.text());
     //console.log(productTitle.text());
-    currentVal = element.text();
+    currentVal = totalProducts.text();
     //console.log(currentVal);
     console.log("Current Value: " + currentVal);
 

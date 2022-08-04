@@ -30,13 +30,17 @@ const client = new Discord.Client({
     ]
 })
 
+const channelID=1004306394683551764;
+
 
 client.on('ready', () =>{
     console.log("This bot is online")
 })
 
 client.on('messageCreate', (message) => {
+if (message.channelId == channelID) {
     if (message.content == ".c") {
+		console.log(message.channelId);
 		// If lib.timedCheck is 'undefined'.
 		if(!lib.timedCheck) {
 			lib.timedCheck = setInterval(() => {
@@ -56,11 +60,12 @@ client.on('messageCreate', (message) => {
 //1800000 - 30 minute intervals        
     }
 	// stop the bot from running.
-	if (message.content == ".s") {
+	else if (message.content == ".s") {
 		clearInterval(lib.timedCheck);
 		lib.timedCheck = undefined;
 		message.reply("Stopping monitor...");
 	}
+}
 
 	//valcheck function used to reset timedcheck variable once number of iterations are met.
 	let valcheck = () => {
@@ -74,10 +79,11 @@ client.on('messageCreate', (message) => {
 		}
 	}
 
+
 })
 
 
-//let test = lib.loadPages();
+let test = lib.loadPages();
 
 
 client.login(process.env.TOKEN)
