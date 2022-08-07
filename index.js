@@ -43,14 +43,19 @@ async function loadPages() {
     console.log("length: " + productColumns.length);
     let priceArray = [];
     let imageURLArray = [];
+    let productURLArray = [];
     for  (let i  = 0; i < productColumns.length; i++) {
-         let allReducedPrices = $(productColumns[i]).find(".price-row")[1];
+         let allReducedPrices = $(productColumns[i]).find(".price-row")[0];
          // Get src value from image element to get image URL.
          let imageLink = $(productColumns[i]).find('img').attr('src');
          imageLink = "https:" + imageLink;
          console.log(imageLink);
          //Issue: some images are encoded in base64, if this is the case we need a default image.
          imageURLArray.push(imageLink);
+
+         let productLink = $(productColumns[i]).find('a').attr('href');
+         productLink = "https://fanatics.com" + productLink;
+         productURLArray.push(productLink);
          // Algorithm if you want to remove the second occurence of a character.
          // split function on string with substring you want to remove as seperator.
          // Followed by the limit "2", this will split only two elements into an array.
@@ -74,16 +79,19 @@ finalProductsArray.push(totalProducts.text());
         let theName = products[x];
         let thePrice = priceArray[x];
         let theImage = imageURLArray[x];
+        let theURL = productURLArray[x];
 
         const productObj = {
             name: theName,
             price: thePrice,
-            image: theImage
+            image: theImage,
+            URL: theURL
         }
         finalProductsArray.push(productObj);
      }
 
 
+    //  console.log(finalProductsArray);
     //console.log(productTitle.text());
     currentVal = totalProducts.text();
     //console.log(currentVal);
