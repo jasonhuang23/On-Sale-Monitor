@@ -47,8 +47,9 @@ async function loadPages() {
          let allReducedPrices = $(productColumns[i]).find(".price-row")[1];
          // Get src value from image element to get image URL.
          let imageLink = $(productColumns[i]).find('img').attr('src');
-         //Issue: some images are encoded in base64, if this is the case we need a default image.
+         imageLink = "https:" + imageLink;
          console.log(imageLink);
+         //Issue: some images are encoded in base64, if this is the case we need a default image.
          imageURLArray.push(imageLink);
          // Algorithm if you want to remove the second occurence of a character.
          // split function on string with substring you want to remove as seperator.
@@ -64,10 +65,10 @@ async function loadPages() {
          priceArray.push(finalAllReducedPrices);
          
      }
-     console.log("Array Length: " + priceArray.length);
-     console.log("image array: " + imageURLArray.length);
 
-let testProductArray = [];
+let finalProductsArray = [];
+
+finalProductsArray.push(totalProducts.text());
 
      for (let x in products) {
         let theName = products[x];
@@ -79,19 +80,16 @@ let testProductArray = [];
             price: thePrice,
             image: theImage
         }
-        testProductArray.push(productObj);
+        finalProductsArray.push(productObj);
      }
 
-     console.log(testProductArray);
 
-
-    console.log(totalProducts.text());
     //console.log(productTitle.text());
     currentVal = totalProducts.text();
     //console.log(currentVal);
     console.log("Current Value: " + currentVal);
 
-    return currentVal;
+    return finalProductsArray;
 
     }
 
