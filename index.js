@@ -43,6 +43,7 @@ async function loadPages() {
     let priceArray = [];
     let imageURLArray = [];
     let productURLArray = [];
+    let productIDArray = [];
     let finalProductsArray = [];
 
     for  (let i  = 0; i < productColumns.length; i++) {
@@ -50,13 +51,18 @@ async function loadPages() {
          // Get src value from image element to get image URL.
          let imageLink = $(productColumns[i]).find('img').attr('src');
          imageLink = "https:" + imageLink;
-         console.log(imageLink);
          //Issue: some images are encoded in base64, if this is the case we need a default image.
          imageURLArray.push(imageLink);
 
          let productLink = $(productColumns[i]).find('a').attr('href');
          productLink = "https://fanatics.com" + productLink;
          productURLArray.push(productLink);
+
+         //Get product ID.
+         let productID = $(productColumns[i]).find('a').attr('data-trk-id');
+         productID = productID.slice(2);
+         productIDArray.push(productID);
+
          // Algorithm if you want to remove the second occurence of a character. 
          reducedPricesText = ($(allReducedPrices).text()).split("$", 2).join("$");
         // finalAllReducedPrices will now store all the reduced prices for the products.
@@ -70,12 +76,14 @@ async function loadPages() {
 finalProductsArray.push(totalProducts.text());
 
      for (let x in products) {
+        let theProductID = productIDArray[x];
         let theName = products[x];
         let thePrice = priceArray[x];
         let theImage = imageURLArray[x];
         let theURL = productURLArray[x];
 
         const productObj = {
+            Id: theProductID,
             name: theName,
             price: thePrice,
             image: theImage,
@@ -83,6 +91,7 @@ finalProductsArray.push(totalProducts.text());
         }
         finalProductsArray.push(productObj);
      }
+
 
     return finalProductsArray;
 

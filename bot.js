@@ -36,7 +36,7 @@ if (message.channelId == channelID) {
 					message.reply({embeds: [embeds.productCountEmbed]});
 					
 						for(let x = 1; x < returnVal.length; x++) {
-							embeds.productsEmbed.setTitle(returnVal[x].name);
+							embeds.productsEmbed.setTitle((returnVal[x].name).concat(" - ", returnVal[x].Id));
 							embeds.productsEmbed.setURL(returnVal[x].URL);
 							embeds.productsEmbed.setImage(returnVal[x].image);
 							embeds.productsEmbed.setDescription(returnVal[x].price);
@@ -75,7 +75,7 @@ if (message.channelId == channelID) {
 })
 
 
-let test = lib.loadPages();
+// let test = lib.loadPages();
 
 
 client.login(process.env.TOKEN)
