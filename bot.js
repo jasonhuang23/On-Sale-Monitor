@@ -2,24 +2,8 @@ const Discord = require('discord.js')
 require("dotenv").config()
 //const bot = new Discord.Client();
 const lib = require("./index")
+const embeds = require("./embeds")
 const { MessageEmbed } = require('discord.js')
-
-const exampleEmbed = new MessageEmbed()
-	.setColor('#0099ff')
-	.setTitle('Some title')
-	//.setURL('https://discord.js.org/')
-	//.setAuthor({ name: 'Some name', iconURL: 'https://i.imgur.com/AfFp7pu.png', url: 'https://discord.js.org' })
-	//.setDescription('Some description here')
-	// .setThumbnail('')
-	.addFields(
-		{ name: 'Fanatics', value: '[Link](https://www.fanatics.com/mlb/hats-fitted-sale-items/o-3409+d-19772242-75445340+os-4+z-9-3556458608)', inline: true },
-		{ name: 'Fansedge', value: '[Link](https://www.fansedge.com/en/mlb-hats-fitted-sale-items/o-4510+d-3472148327-56835899+os-4+z-9-1676315066)', inline: true },
-		{ name: 'MLB Shop', value: '[Link](https://www.mlbshop.com/caps-fitted-sale-items/d-3472996692-9005338232+os-4+z-9-1770578515)', inline: true },
-
-	)
-	//.setImage('https://i.imgur.com/AfFp7pu.png')
-	.setTimestamp()
-	.setFooter({ text: 'Some footer text here', iconURL: 'https://i.imgur.com/AfFp7pu.png' });
 
 
 
@@ -30,12 +14,15 @@ const client = new Discord.Client({
     ]
 })
 
+const channelID=1004306394683551764;
+
 
 client.on('ready', () =>{
     console.log("This bot is online")
 })
 
 client.on('messageCreate', (message) => {
+if (message.channelId == channelID) {
     if (message.content == ".c") {
 		// If lib.timedCheck is 'undefined'.
 		if(!lib.timedCheck) {
@@ -45,8 +32,17 @@ client.on('messageCreate', (message) => {
 				// Variable returnVal stores loadPages() async result.
 				result.then(function(returnVal) {
 					// returnVal will have number of items on page.
-					exampleEmbed.setTitle(returnVal);
-					message.reply({embeds: [exampleEmbed]});
+					embeds.productCountEmbed.setTitle(returnVal[0]);
+					message.reply({embeds: [embeds.productCountEmbed]});
+					
+						for(let x = 1; x < returnVal.length; x++) {
+							embeds.productsEmbed.setTitle(returnVal[x].name);
+							embeds.productsEmbed.setURL(returnVal[x].URL);
+							embeds.productsEmbed.setImage(returnVal[x].image);
+							embeds.productsEmbed.setDescription(returnVal[x].price);
+							client.channels.cache.get('1004667422646747167').send({embeds: [embeds.productsEmbed]});
+							
+						}
 					message.reply("Iteration #: " + lib.val);
 					console.log("Running... " + lib.val++);
 					valcheck();
@@ -56,11 +52,12 @@ client.on('messageCreate', (message) => {
 //1800000 - 30 minute intervals        
     }
 	// stop the bot from running.
-	if (message.content == ".s") {
+	else if (message.content == ".s") {
 		clearInterval(lib.timedCheck);
 		lib.timedCheck = undefined;
 		message.reply("Stopping monitor...");
 	}
+}
 
 	//valcheck function used to reset timedcheck variable once number of iterations are met.
 	let valcheck = () => {
@@ -73,6 +70,7 @@ client.on('messageCreate', (message) => {
 			return message.channel.send('command finished');
 		}
 	}
+
 
 })
 
