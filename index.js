@@ -2,7 +2,6 @@ const puppeteer = require("puppeteer");
 const cheerio = require("cheerio");
 
 
-let currentVal = 0;
 async function loadPages() {
     const browser = await puppeteer.launch();
     try {
@@ -40,10 +39,12 @@ async function loadPages() {
     const $ = cheerio.load(pageData.html);
     const totalProducts = $(".product-count");
     const productColumns = $(".column");
-    console.log("length: " + productColumns.length);
+
     let priceArray = [];
     let imageURLArray = [];
     let productURLArray = [];
+    let finalProductsArray = [];
+
     for  (let i  = 0; i < productColumns.length; i++) {
          let allReducedPrices = $(productColumns[i]).find(".price-row")[0];
          // Get src value from image element to get image URL.
@@ -56,22 +57,15 @@ async function loadPages() {
          let productLink = $(productColumns[i]).find('a').attr('href');
          productLink = "https://fanatics.com" + productLink;
          productURLArray.push(productLink);
-         // Algorithm if you want to remove the second occurence of a character.
-         // split function on string with substring you want to remove as seperator.
-         // Followed by the limit "2", this will split only two elements into an array.
-         // Join function on array as the first occurence will not be inserted back. 
+         // Algorithm if you want to remove the second occurence of a character. 
          reducedPricesText = ($(allReducedPrices).text()).split("$", 2).join("$");
-
         // finalAllReducedPrices will now store all the reduced prices for the products.
          finalAllReducedPrices = reducedPricesText.split("Reduced: ").join("");
-
-         //push prices into priceArray array.
 
          priceArray.push(finalAllReducedPrices);
          
      }
 
-let finalProductsArray = [];
 
 finalProductsArray.push(totalProducts.text());
 
@@ -90,13 +84,6 @@ finalProductsArray.push(totalProducts.text());
         finalProductsArray.push(productObj);
      }
 
-
-    //  console.log(finalProductsArray);
-    //console.log(productTitle.text());
-    currentVal = totalProducts.text();
-    //console.log(currentVal);
-    console.log("Current Value: " + currentVal);
-
     return finalProductsArray;
 
     }
@@ -113,11 +100,7 @@ finalProductsArray.push(totalProducts.text());
 
 }
 
-async function productNames(productArray) {
-    for(var index in productArray) {
-        console.log(productArray[index]);
-    }
-}
+
 module.exports = {loadPages};
 // Two variables to be used in index.js
 // Set as setInterval() funcation call.

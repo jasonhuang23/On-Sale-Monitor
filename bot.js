@@ -75,7 +75,7 @@ if (message.channelId == channelID) {
 })
 
 
-//let test = lib.loadPages();
+let test = lib.loadPages();
 
 
 client.login(process.env.TOKEN)
