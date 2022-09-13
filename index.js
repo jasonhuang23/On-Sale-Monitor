@@ -52,7 +52,14 @@ async function loadPages() {
          let imageLink = $(productColumns[i]).find('img').attr('src');
          imageLink = "https:" + imageLink;
          //Issue: some images are encoded in base64, if this is the case we need a default image.
-         imageURLArray.push(imageLink);
+            if (imageLink.includes("base64")) {
+                imageURLArray.push("https://st.depositphotos.com/1987177/3470/v/450/depositphotos_34700099-stock-illustration-no-photo-available-or-missing.jpg");
+            }
+            else {
+            imageURLArray.push(imageLink);
+            }
+
+         
 
          let productLink = $(productColumns[i]).find('a').attr('href');
          productLink = "https://fanatics.com" + productLink;
@@ -81,6 +88,8 @@ finalProductsArray.push(totalProducts.text());
         let thePrice = priceArray[x];
         let theImage = imageURLArray[x];
         let theURL = productURLArray[x];
+
+        console.log(theImage);
 
         const productObj = {
             Id: theProductID,

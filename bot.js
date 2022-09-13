@@ -21,6 +21,8 @@ client.on('ready', () =>{
     console.log("This bot is online")
 })
 
+
+let currentVal = 0;
 client.on('messageCreate', (message) => {
 if (message.channelId == channelID) {
     if (message.content == ".c") {
@@ -31,14 +33,20 @@ if (message.channelId == channelID) {
 				let result = lib.loadPages();
 				// Variable returnVal stores loadPages() async result.
 				result.then(function(returnVal) {
+					if(lib.val == 0) {
+						currentVal = (returnVal[0].split(" "))[0];
+					}
+					console.log("This is the current value: " + currentVal + " on iteration: " + lib.val);
 					// returnVal will have number of items on page.
 					embeds.productCountEmbed.setTitle(returnVal[0]);
+					const [ productCount ] = returnVal;
+					console.log(productCount);
 					message.reply({embeds: [embeds.productCountEmbed]});
 					
 						for(let x = 1; x < returnVal.length; x++) {
 							embeds.productsEmbed.setTitle((returnVal[x].name).concat(" - ", returnVal[x].Id));
 							embeds.productsEmbed.setURL(returnVal[x].URL);
-							embeds.productsEmbed.setImage(returnVal[x].image);
+							embeds.productsEmbed.setThumbnail(returnVal[x].image);
 							embeds.productsEmbed.setDescription(returnVal[x].price);
 							client.channels.cache.get('1004667422646747167').send({embeds: [embeds.productsEmbed]});
 							
@@ -75,7 +83,7 @@ if (message.channelId == channelID) {
 })
 
 
-// let test = lib.loadPages();
+ let test = lib.loadPages();
 
 
 client.login(process.env.TOKEN)
